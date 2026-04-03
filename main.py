@@ -53,11 +53,16 @@ def create_boat():
     # you can access the values with request.from.name
     # this name is the value of the name attribute in HTML form's input element
     # ex: print(request.form['id'])
+    # request.form is the submitted HTML form data.
+    # Each form input's name becomes a key, and what the user typed becomes the value.
     try:
         conn.execute(
-            text("INSERT INTO boats values (:id, :name, :type, :owner_id, :rental_price)"),
+            text("INSERT INTO boats values (:id, :name, :type, :owner_id, :rental_price)"), #these are variables with the name coming after the ':' # these come from the form element in the html file
             request.form
         )
+        # conn.commit() saves the database change permanently.
+        # This is a database commit, not a Git or GitHub commit.
+        conn.commit()
         return render_template('boats_create.html', error=None, success="Data inserted successfully!")
     except Exception as e:
         error = e.orig.args[1]
@@ -66,14 +71,15 @@ def create_boat():
 
 # Same URL idea here:
 # GET /delete shows the delete form, while POST /delete processes the submitted data.
-@app.route('/delete', methods=['GET'])
+@app.route('/delete', methods=['GET']) # this runs first and shows the form to delete
 def delete_get_request():
     return render_template('boats_delete.html')
 
 
-@app.route('/delete', methods=['POST'])
+@app.route('/delete', methods=['POST']) # this runs if the user desides to submit the delete form deleting the specfic record
 def delete_boat():
     try:
+        # request.form here contains the values submitted from the delete form.
         conn.execute(
             text("DELETE FROM boats WHERE id = :id"),
             request.form
