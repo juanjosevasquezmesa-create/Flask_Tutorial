@@ -42,44 +42,54 @@
 
 {% extends "base.html" %}
 {% block body %}
-    {% if page > 0 and page < (count/per_page + 1) or page is none %} <!-- (page - 1) * per_page -->
-        {% set prev_page = page - 1 %}  <!-- variables in jinja -->
-        <div class="column">
-            <h3>Page {{ page }}</h3> <!-- page argument /boats/(int) -->
 
-            <div class="flex-box">
-                {% for boat in boats %} <!-- runs a for loop through every object in the boats array as boat-->
-                    <div class="boat">
-                        <ul>
-                            <li>Boat id: {{ boat['boatID'] }}</li> <!-- these column names are case sensitive-->
-                            <ul>
-                                <li>Name: {{ boat['name'] }}</li>
-                                <li>Type: {{ boat['type'] }}</li>
-                                <li>Owner ID: {{ boat['owner_id'] }}</li>
-                                <li>Price: {{ boat['rental_price'] }}</li>
-                            </ul>
-                        </ul>
-                    </div>
-                {% endfor %}
+      
+    {% set prev_page = page - 1 %}  <!-- variables in jinja -->
+    <div class="column">
+        <h3>Page {{ page }}</h3> <!-- page argument /boats/(int) -->
 
-                {% if boats | length < 1 %}
-                    <h1>No data available</h1>
-                {% endif %}
-            </div>
+        <div class="pagination_bar">
+            {% if page > 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
+                <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
+            {% endif %}
 
-            <div class="pagination_bar">
-                {% if page > 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                    <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
-                {% endif %}
+            <a class="pagination_button" style="background-color: black"> {{page}} </a> <!-- this is the current tab ie current number -->
 
-                <a class="pagination_button" style="background-color: black"> {{page}} </a> <!-- this is the current tab ie current number -->
+            {% if page + 1 <= total_pages %}
                 <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button" > {{ page + 1 }} </a> <!-- this is the following number -->
+            {% endif %}
+            
+            {% if page + 2 <= total_pages %}
                 <a href="{{ "/boats/"+ (page + 2) | string }}" class="pagination_button"> {{ page + 2 }} </a> <!-- this is 2 pages down -->
-                <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button"> > </a> <!-- this is the right arrow -->
+            {% endif %}
 
-            </div>
+            {% if page + 3 <= total_pages %}
+                <a href="{{ "/boats/"+ (page + 3) | string }}" class="pagination_button"> > </a> <!-- this is the right arrow -->
+            {% endif %}
+        </div>  
+
+        <div class="flex-box">
+            {% for boat in boats %} <!-- runs a for loop through every object in the boats array as boat-->
+                <div class="boat">
+                    <ul>
+                        <li>Boat id: {{ boat['boatID'] }}</li> <!-- these column names are case sensitive-->
+                        <ul>
+                            <li>Name: {{ boat['name'] }}</li>
+                            <li>Type: {{ boat['type'] }}</li>
+                            <li>Owner ID: {{ boat['owner_id'] }}</li>
+                            <li>Price: {{ boat['rental_price'] }}</li>
+                        </ul>
+                    </ul>
+                </div>
+            {% endfor %}
+
+            {% if boats | length < 1 %}
+                <h1>No data available</h1>
+            {% endif %}
         </div>
-    {% endif %}
+
+    </div>
+
     
 
 {% endblock %}

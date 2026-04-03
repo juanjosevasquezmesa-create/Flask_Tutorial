@@ -25,15 +25,18 @@ def user(name):
 @app.route('/boats/')
 @app.route('/boats/<page>')
 def get_boats(page=1):
+    page = int(page)  # request params always come as strings. So type conversion is necessary. IMPORTANT
     if page < 1:
         page = 1
-    page = int(page)  # request params always come as strings. So type conversion is necessary. IMPORTANT
+    
     per_page = 30  # records to show per page
     total_boats = conn.execute(text("SELECT count(*) FROM boats")).scalar()
     total_pages = max(1, ceil(total_boats / per_page))
-
-    if page < 1 or page > total_pages:
-        abort(404)
+    if page > total_pages:
+        page = total_pages
+        
+    # if page < 1 or page > total_pages:
+    #     abort(404)
 
     boats = conn.execute(text(f"SELECT * FROM boats LIMIT {per_page} OFFSET {(page - 1) * per_page}")).all() # the -1 is due to indexing of data so page 1 will have 1-10 ...
     print(boats)
