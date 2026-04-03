@@ -15,9 +15,11 @@
 {% extends "base.html" %}
 {% block body %}
     <div class="flex-box">
+        
         {% for boat in boats %}     <!-- for loops in jinja is just like python's. You can also try array slicing here: boats[:15]-->
             <div class="boat">
                 <ul>
+                    <!-- boat is an object (dictionary) that holds all of the keys (column names) and values (the value assigned to the column and row)-->
                     <li>Boat id: {{ boat['id'] }}</li>
                     <ul>
                         <li>Name: {{ boat['name'] }}</li>
