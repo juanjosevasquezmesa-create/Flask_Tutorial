@@ -42,39 +42,44 @@
 
 {% extends "base.html" %}
 {% block body %}
-    {% set prev_page = page - 1 %}  <!-- variables in jinja --->
-    <div class="column">
-        <h3>Page {{ page }}</h3>
+    {% if page > 0 and page < (count/per_page + 1) or page is none %} <!-- (page - 1) * per_page -->
+        {% set prev_page = page - 1 %}  <!-- variables in jinja -->
+        <div class="column">
+            <h3>Page {{ page }}</h3> <!-- page argument /boats/(int) -->
 
-        <div class="flex-box">
-            {% for boat in boats %}
-                <div class="boat">
-                    <ul>
-                        <li>Boat id: {{ boat['id'] }}</li>
+            <div class="flex-box">
+                {% for boat in boats %} <!-- runs a for loop through every object in the boats array as boat-->
+                    <div class="boat">
                         <ul>
-                            <li>Name: {{ boat['name'] }}</li>
-                            <li>Type: {{ boat['type'] }}</li>
-                            <li>Owner ID: {{ boat['owner_id'] }}</li>
-                            <li>Price: {{ boat['rental_price'] }}</li>
+                            <li>Boat id: {{ boat['id'] }}</li>
+                            <ul>
+                                <li>Name: {{ boat['name'] }}</li>
+                                <li>Type: {{ boat['type'] }}</li>
+                                <li>Owner ID: {{ boat['owner_id'] }}</li>
+                                <li>Price: {{ boat['rental_price'] }}</li>
+                            </ul>
                         </ul>
-                    </ul>
-                </div>
-            {% endfor %}
+                    </div>
+                {% endfor %}
 
-            {% if boats | length < 1 %}
-                <h1>No data available</h1>
-            {% endif %}
+                {% if boats | length < 1 %}
+                    <h1>No data available</h1>
+                {% endif %}
+            </div>
+
+            <div class="pagination_bar">
+                {% if page > 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
+                    <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
+                {% endif %}
+
+                <a class="pagination_button" style="background-color: black"> {{page}} </a> <!-- this is the current tab ie current number -->
+                <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button" > {{ page + 1 }} </a> <!-- this is the following number -->
+                <a href="{{ "/boats/"+ (page + 2) | string }}" class="pagination_button"> {{ page + 2 }} </a> <!-- this is 2 pages down -->
+                <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button"> > </a> <!-- this is the right arrow -->
+
+            </div>
         </div>
-
-        <div class="pagination_bar">
-            <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> < </a>
-            <a class="pagination_button" style="background-color: black"> {{page}} </a>
-            <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button" > {{ page + 1 }} </a>
-            <a href="{{ "/boats/"+ (page + 2) | string }}" class="pagination_button"> {{ page + 2 }} </a>
-            <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button"> > </a>
-
-        </div>
-    </div>
-
+    {% endif %}
+    
 
 {% endblock %}

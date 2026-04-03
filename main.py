@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request
+from flask import Flask, abort, render_template, request
+from math import ceil
 from sqlalchemy import Column, Integer, String, Numeric, create_engine, text
 
 app = Flask(__name__)
@@ -24,18 +25,29 @@ def user(name):
 @app.route('/boats/')
 @app.route('/boats/<page>')
 def get_boats(page=1):
-    page = int(page)  # request params always come as strings. So type conversion is necessary.
-    per_page = 10  # records to show per page
-    boats = conn.execute(text(f"SELECT * FROM boats LIMIT {per_page} OFFSET {(page - 1) * per_page}")).all()
+    if page < 1:
+        page = 1
+    page = int(page)  # request params always come as strings. So type conversion is necessary. IMPORTANT
+    per_page = 30  # records to show per page
+    total_boats = conn.execute(text("SELECT count(*) FROM boats")).scalar()
+    total_pages = max(1, ceil(total_boats / per_page))
+
+    if page < 1 or page > total_pages:
+        abort(404)
+
+    boats = conn.execute(text(f"SELECT * FROM boats LIMIT {per_page} OFFSET {(page - 1) * per_page}")).all() # the -1 is due to indexing of data so page 1 will have 1-10 ...
     print(boats)
-    return render_template('boats.html', boats=boats, page=page, per_page=per_page)
+    return render_template('boats.html', boats=boats, page=page, per_page=per_page, count=total_boats, total_pages=total_pages) # you have to do variable=variable
 
-
+# Flask checks both the URL and the HTTP method.
+# GET /create happens when a user visits the page, so this route shows the form.
 @app.route('/create', methods=['GET'])
 def create_get_request():
     return render_template('boats_create.html')
 
 
+# POST /create happens when that form is submitted with method="post",
+# so this route receives the form data and saves it.
 @app.route('/create', methods=['POST'])
 def create_boat():
     # you can access the values with request.from.name
@@ -52,7 +64,8 @@ def create_boat():
         print(error)
         return render_template('boats_create.html', error=error, success=None)
 
-
+# Same URL idea here:
+# GET /delete shows the delete form, while POST /delete processes the submitted data.
 @app.route('/delete', methods=['GET'])
 def delete_get_request():
     return render_template('boats_delete.html')
