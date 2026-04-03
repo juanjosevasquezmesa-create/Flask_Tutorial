@@ -62,6 +62,7 @@ def create_boat():
         )
         # conn.commit() saves the database change permanently.
         # This is a database commit, not a Git or GitHub commit.
+        # Without conn.commit(), the new row may not actually be saved in the database.
         conn.commit()
         return render_template('boats_create.html', error=None, success="Data inserted successfully!")
     except Exception as e:
@@ -71,23 +72,24 @@ def create_boat():
 
 # Same URL idea here:
 # GET /delete shows the delete form, while POST /delete processes the submitted data.
-@app.route('/delete', methods=['GET']) # this runs first and shows the form to delete
+@app.route('/delete', methods=['GET'])  # Runs when the user visits /delete and shows the delete form.
 def delete_get_request():
     return render_template('boats_delete.html')
 
 
-@app.route('/delete', methods=['POST']) # this runs if the user desides to submit the delete form deleting the specfic record
+@app.route('/delete', methods=['POST'])  # Runs when the user submits the delete form and processes the deletion.
 def delete_boat():
     try:
         # request.form here contains the values submitted from the delete form.
         conn.execute(
-            text("DELETE FROM boats WHERE id = :id"),
-            request.form
+            text("DELETE FROM boats WHERE BoatID = :id"), # changed from id to BoatID becuase that is how it is in my database but :id is the same becuase it comes from the request.form
+            request.form # this is the form element in the html file
         )
         return render_template('boats_delete.html', error=None, success="Data deleted successfully!")
     except Exception as e:
         error = e.orig.args[1]
         print(error)
+        conn.commit()
         return render_template('boats_delete.html', error=error, success=None)
 
 

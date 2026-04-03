@@ -51,7 +51,7 @@
                 {% for boat in boats %} <!-- runs a for loop through every object in the boats array as boat-->
                     <div class="boat">
                         <ul>
-                            <li>Boat id: {{ boat['id'] }}</li>
+                            <li>Boat id: {{ boat['boatID'] }}</li> <!-- these column names are case sensitive-->
                             <ul>
                                 <li>Name: {{ boat['name'] }}</li>
                                 <li>Type: {{ boat['type'] }}</li>
