@@ -10,6 +10,20 @@
     .boat {
         min-width: 200px;
         padding: 10px;
+        cursor: pointer;
+    }
+
+    .card {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin: 10px;
+        overflow: hidden;
+        background-color: #fff;
+    }
+
+    .card-body {
+        padding: 15px;
     }
 
     .pagination_bar {
@@ -38,6 +52,7 @@
         padding-top: 20px;
         align-items: center;
     }
+    
 </style>
 
 {% extends "base.html" %}
@@ -49,8 +64,16 @@
         <h3>Page {{ page }}</h3> <!-- page argument /boats/(int) -->
 
         <div class="pagination_bar">
+            {% if page - 3 >= 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
+                <a href= "{{ "/boats/"+ (page - 3) | string }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
+            {% endif %}
+
+            {% if page - 2 >= 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
+                <a href= "{{ "/boats/"+ (page - 2) | string }}" class="pagination_button"> {{ page - 2 }} </a> <!-- this is the left arrow -->
+            {% endif %}
+
             {% if page > 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
+                <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> {{ page -1 }} </a> <!-- this is the left arrow -->
             {% endif %}
 
             <a class="pagination_button" style="background-color: black"> {{page}} </a> <!-- this is the current tab ie current number -->
@@ -70,17 +93,21 @@
 
         <div class="flex-box">
             {% for boat in boats %} <!-- runs a for loop through every object in the boats array as boat-->
-                <div class="boat">
-                    <ul>
-                        <li>Boat id: {{ boat['boatID'] }}</li> <!-- these column names are case sensitive-->
-                        <ul>
-                            <li>Name: {{ boat['name'] }}</li>
-                            <li>Type: {{ boat['type'] }}</li>
-                            <li>Owner ID: {{ boat['owner_id'] }}</li>
-                            <li>Price: {{ boat['rental_price'] }}</li>
-                        </ul>
-                    </ul>
-                </div>
+                <a href="/boats/id/{{ boat['boatID'] }}" style="text-decoration: none; color: inherit;">
+                    <div class="card boat">
+                        <div class="card-body">
+                            <ul>
+                                <li>Boat id: {{ boat['boatID'] }}</li> <!-- these column names are case sensitive-->
+                                <ul>
+                                    <li>Name: {{ boat['name'] }}</li>
+                                    <li>Type: {{ boat['type'] }}</li>
+                                    <li>Owner ID: {{ boat['owner_id'] }}</li>
+                                    <li>Price: {{ boat['rental_price'] }}</li>
+                                </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </a>
             {% endfor %}
 
             {% if boats | length < 1 %}

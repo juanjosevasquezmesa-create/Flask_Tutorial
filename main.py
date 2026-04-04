@@ -94,7 +94,7 @@ def delete_boat():
         print(error)
         conn.commit()
         return render_template('boats_delete.html', error=error, success=None)
-
+# make a route method for 'boats/id/<int: id>
 
 if __name__ == '__main__':
     app.run(debug=True)
