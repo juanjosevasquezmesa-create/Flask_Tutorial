@@ -1,47 +1,136 @@
 <style>
     .flex-box {
         display: flex;
-        font-size: 16px;
         flex-wrap: wrap;
-        width: 1140px;
+        gap: 24px;
+        width: min(1140px, calc(100% - 32px));
         margin: auto;
+        justify-content: center;
+        margin-bottom: 60px
     }
 
     .boat {
-        min-width: 200px;
-        padding: 10px;
+        width: 260px;
         cursor: pointer;
     }
 
     .card {
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        margin: 10px;
+        border: 1px solid #dbe7f3;
+        border-radius: 20px;
+        box-shadow: 0 16px 40px rgba(13, 38, 59, 0.12);
         overflow: hidden;
-        background-color: #fff;
+        background: linear-gradient(145deg, #ffffff 0%, #f4f9ff 100%);
+        transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 22px 46px rgba(13, 38, 59, 0.18);
+        border-color: #8cb8e8;
     }
 
     .card-body {
-        padding: 15px;
+        padding: 22px 20px;
+    }
+
+    .boat-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+    }
+
+    .boat-id {
+        display: inline-block;
+        margin-bottom: 14px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        background-color: #103b5d;
+        color: #ffffff;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .boat-name {
+        margin: 0 0 10px;
+        color: #12263a;
+        font-size: 24px;
+        line-height: 1.2;
+    }
+
+    .boat-type {
+        margin: 0 0 18px;
+        color: #56728a;
+        font-size: 15px;
+    }
+
+    .boat-details {
+        display: grid;
+        gap: 12px;
+    }
+
+    .detail-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 0;
+        border-top: 1px solid #e3edf7;
+    }
+
+    .detail-label {
+        color: #5f7b92;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .detail-value {
+        color: #16324a;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: right;
     }
 
     .pagination_bar {
         display: flex;
         justify-content: flex-end;
-        width: 1140px;
+        gap: 10px;
+        width: min(1140px, calc(100% - 32px));
         margin: auto;
     }
+
     .pagination_button {
-        font-size: 20px;
-        background-color: #4CAF50; /* Green */
-        border: none;
-        color: white;
-        padding: 2px 2px 4px;
+        min-width: 44px;
+        height: 44px;
+        border-radius: 14px;
+        border: 1px solid #dbe7f3;
+        background: linear-gradient(145deg, #ffffff 0%, #eef6ff 100%);
+        box-shadow: 0 12px 24px rgba(13, 38, 59, 0.1);
+        color: #16324a;
+        font-size: 16px;
+        font-weight: 700;
         text-align: center;
         text-decoration: none;
-        display: inline-block;
-        width: 30px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .pagination_button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 16px 28px rgba(13, 38, 59, 0.14);
+        border-color: #8cb8e8;
+    }
+
+    .pagination_button.is-active {
+        background: linear-gradient(145deg, #103b5d 0%, #1f5d86 100%);
+        color: #ffffff;
+        border-color: #103b5d;
+        box-shadow: 0 16px 32px rgba(16, 59, 93, 0.28);
     }
 
     .column {
@@ -52,6 +141,114 @@
         padding-top: 20px;
         align-items: center;
     }
+
+    .page-title {
+        margin: 0 0 18px;
+        padding: 14px 28px;
+        border: 1px solid #dbe7f3;
+        border-radius: 18px;
+        background: linear-gradient(145deg, #ffffff 0%, #eef6ff 100%);
+        box-shadow: 0 16px 32px rgba(13, 38, 59, 0.12);
+        color: #12263a;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+        line-height: 1.1;
+    }
+
+    .request-form {
+        width: min(1140px, calc(100% - 32px));
+        margin: 28px auto 36px;
+        padding: 28px;
+        border: 1px solid #dbe7f3;
+        border-radius: 24px;
+        background: linear-gradient(145deg, #ffffff 0%, #f4f9ff 100%);
+        box-shadow: 0 16px 40px rgba(13, 38, 59, 0.12);
+    }
+
+    .request-form-title {
+        margin: 0 0 8px;
+        color: #12263a;
+        font-size: 26px;
+    }
+
+    .request-form-text {
+        margin: 0 0 22px;
+        color: #5f7b92;
+        font-size: 15px;
+    }
+
+    .request-form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
+    .request-field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .request-field-full {
+        grid-column: 1 / -1;
+    }
+
+    .request-label {
+        color: #16324a;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .request-input {
+        height: 48px;
+        padding: 0 16px;
+        border: 1px solid #dbe7f3;
+        border-radius: 14px;
+        background: #ffffff;
+        color: #16324a;
+        box-shadow: 0 10px 24px rgba(13, 38, 59, 0.08);
+        font-size: 15px;
+    }
+
+    .request-input:focus {
+        outline: none;
+        border-color: #8cb8e8;
+        box-shadow: 0 0 0 4px rgba(140, 184, 232, 0.2);
+    }
+
+    .request-submit {
+        margin-top: 20px;
+        min-width: 190px;
+        height: 48px;
+        border: 1px solid #103b5d;
+        border-radius: 14px;
+        background: linear-gradient(145deg, #103b5d 0%, #1f5d86 100%);
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        box-shadow: 0 16px 32px rgba(16, 59, 93, 0.24);
+    }
+
+    @media (max-width: 700px) {
+        .boat {
+            width: 100%;
+            max-width: 340px;
+        }
+
+        .pagination_bar {
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .request-form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
     
 </style>
 
@@ -61,7 +258,41 @@
       
     {% set prev_page = page - 1 %}  <!-- variables in jinja -->
     <div class="column">
-        <h3>Page {{ page }}</h3> <!-- page argument /boats/(int) -->
+        <h1 class="page-title">Page {{ page }}</h1> <!-- page argument /boats/(int) -->
+
+        <form action="/boat-request" method="GET" class="request-form">
+            <h2 class="request-form-title">Request Boat Information</h2>
+            <p class="request-form-text">Fill out the form and we will take you to a page with your submitted request details.</p>
+
+            <div class="request-form-grid">
+                <div class="request-field">
+                    <label for="full_name" class="request-label">Full Name</label>
+                    <input id="full_name" name="full_name" type="text" class="request-input" placeholder="Enter your name" required>
+                </div>
+
+                <div class="request-field">
+                    <label for="email" class="request-label">Email</label>
+                    <input id="email" name="email" type="email" class="request-input" placeholder="Enter your email" required>
+                </div>
+
+                <div class="request-field">
+                    <label for="phone" class="request-label">Phone</label>
+                    <input id="phone" name="phone" type="tel" class="request-input" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="request-field">
+                    <label for="boat_type" class="request-label">Preferred Boat Type</label>
+                    <input id="boat_type" name="boat_type" type="text" class="request-input" placeholder="Sailboat, yacht, fishing boat..." required>
+                </div>
+
+                <div class="request-field request-field-full">
+                    <label for="trip_date" class="request-label">Trip Date</label>
+                    <input id="trip_date" name="trip_date" type="date" class="request-input" required>
+                </div>
+            </div>
+
+            <button type="submit" class="request-submit">View Request Page</button>
+        </form>
 
         <div class="pagination_bar">
             {% if page - 3 >= 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
@@ -76,7 +307,7 @@
                 <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> {{ page -1 }} </a> <!-- this is the left arrow -->
             {% endif %}
 
-            <a class="pagination_button" style="background-color: black"> {{page}} </a> <!-- this is the current tab ie current number -->
+            <a class="pagination_button is-active"> {{page}} </a> <!-- this is the current tab ie current number -->
 
             {% if page + 1 <= total_pages %}
                 <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button" > {{ page + 1 }} </a> <!-- this is the following number -->
@@ -93,18 +324,23 @@
 
         <div class="flex-box">
             {% for boat in boats %} <!-- runs a for loop through every object in the boats array as boat-->
-                <a href="/boats/id/{{ boat['boatID'] }}" style="text-decoration: none; color: inherit;">
+                <a href="/boats/id/{{ boat['boatID'] }}" class="boat-link">
                     <div class="card boat">
                         <div class="card-body">
-                            <ul>
-                                <li>Boat id: {{ boat['boatID'] }}</li> <!-- these column names are case sensitive-->
-                                <ul>
-                                    <li>Name: {{ boat['name'] }}</li>
-                                    <li>Type: {{ boat['type'] }}</li>
-                                    <li>Owner ID: {{ boat['owner_id'] }}</li>
-                                    <li>Price: {{ boat['rental_price'] }}</li>
-                                </ul>
-                            </ul>
+                            <span class="boat-id">Boat #{{ boat['boatID'] }}</span>
+                            <h3 class="boat-name">{{ boat['name'] }}</h3>
+                            <p class="boat-type">{{ boat['type'] }}</p>
+
+                            <div class="boat-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Owner ID</span>
+                                    <span class="detail-value">{{ boat['owner_id'] }}</span>
+                                </div>
+                                <div class="detail-row">
+                                    <span class="detail-label">Rental Price</span>
+                                    <span class="detail-value">${{ boat['rental_price'] }}</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </a>
@@ -116,7 +352,4 @@
         </div>
 
     </div>
-
-    
-
 {% endblock %}

@@ -20,6 +20,18 @@ def user(name):
     return render_template('user.html', name=name)
 
 
+@app.route('/boats/id/<int:id>', methods=['GET'])
+def boat_request(id = 1):
+    form_data = {
+        'full_name': request.args.get('full_name', ''),
+        'email': request.args.get('email', ''),
+        'phone': request.args.get('phone', ''),
+        'boat_type': request.args.get('boat_type', ''),
+        'trip_date': request.args.get('trip_date', '')
+    }
+    return render_template('boat_request.html', form_data=form_data)
+
+
 # get all boats
 # this is done to handle requests for two routes -
 @app.route('/boats/')

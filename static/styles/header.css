@@ -3,34 +3,69 @@
 }
 
 .logo {
-  width: 45px;
+  width: 78px;
+  height: auto;
+  max-height: 88px;
+  object-fit: contain;
+  border-radius: 16px;
+  border: 1px solid #dbe7f3;
+  box-shadow: 0 12px 24px rgba(13, 38, 59, 0.12);
+  background: linear-gradient(145deg, #ffffff 0%, #f4f9ff 100%);
+  padding: 6px;
+  display: block;
 }
 
 header li {
-  float: left;
-  display: block;
-  padding-left: 8px;
-  padding-right: 8px;
+  list-style: none;
 }
 
 .topBar{
-  background-color: #faf9f7;
+  width: 100%;
+  margin: 0;
+  padding: 16px 22px;
+  border: 1px solid #dbe7f3;
+  border-radius: 0;
+  box-shadow: 0 16px 40px rgba(13, 38, 59, 0.12);
+  background: linear-gradient(145deg, #ffffff 0%, #f4f9ff 100%);
   display:flex;
   justify-content: space-between;
   align-items:center;
-  padding: 10px;
+  gap: 18px;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.navList {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
 }
 
 .formSection {
-  padding: 10px;
-  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .input, .barItem input{
-  height: 35px;
-  border: none;
-  border-radius: 5px;
-  margin-left: 10px;
+  height: 42px;
+  border-radius: 14px;
+  border: 1px solid #dbe7f3;
+  margin-left: 0;
+  padding: 0 14px;
+  background: #ffffff;
+  color: #16324a;
+  box-shadow: 0 10px 24px rgba(13, 38, 59, 0.08);
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-weight: 800;
 }
 
 .mainDiv {
@@ -45,7 +80,70 @@ h1{
 
 header a{
   text-decoration:none;
-  color:black;
+  color:#16324a;
+}
+
+.navList a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 0 22px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.navList a:hover {
+  background-color: #eef6ff;
+  border-color: #dbe7f3;
+  color: #103b5d;
+  transform: translateY(-1px);
+}
+
+.formSection form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.barItem input::placeholder {
+  color: #6b849a;
+}
+
+.barItem input[type="submit"],
+.signupButton {
+  background: linear-gradient(145deg, #103b5d 0%, #1f5d86 100%);
+  color: #ffffff;
+  border-color: #103b5d;
+  cursor: pointer;
+  box-shadow: 0 16px 32px rgba(16, 59, 93, 0.24);
+}
+
+.signupButton {
+  height: 42px;
+  margin: 0;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  position: relative;
+  top: -7.8px;
+  line-height: 1;
+  border: 1px solid #103b5d;
+  border-radius: 14px;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.page-shell {
+  padding: 20px 0 40px;
 }
 
 /* FOOTER */
@@ -59,23 +157,28 @@ html {
 }
 
 body {
-  font-family: acumin-pro, system-ui, sans-serif;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   margin: 0;
   display: grid;
   grid-template-rows: auto 1fr auto;
   font-size: 14px;
-  background-color: #f4f4f4;
+  background: linear-gradient(180deg, #edf5fb 0%, #f8fbff 30%, #eef4f9 100%);
   align-items: start;
   min-height: 100vh;
+  color: #16324a;
 }
 
 .footer {
+  width: 100%;
+  margin: 0;
   display: flex;
   flex-flow: row wrap;
-  padding: 30px 30px 20px 30px;
-  color: #2f2f2f;
-  background-color: #fff;
-  border-top: 1px solid #e5e5e5;
+  padding: 32px 32px 24px;
+  color: #16324a;
+  background: linear-gradient(145deg, #ffffff 0%, #f4f9ff 100%);
+  border: 1px solid #dbe7f3;
+  border-radius: 0;
+  box-shadow: 0 16px 40px rgba(13, 38, 59, 0.12);
 }
 
 .footer > * {
@@ -88,26 +191,28 @@ body {
 }
 
 .footer__logo {
-  font-family: 'Pacifico', cursive;
-  font-weight: 400;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  font-weight: 700;
   font-size: 1.5rem;
   text-align: left;
+  color: #12263a;
 }
 
 .footer__addr h2 {
   margin-top: 1.3em;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .nav__title {
-  font-weight: 400;
+  font-weight: 700;
   font-size: 15px;
+  color: #12263a;
 }
 
 .footer address {
   font-style: normal;
-  color: #999;
+  color: #5f7b92;
 }
 
 .footer__btn {
@@ -116,13 +221,14 @@ body {
   justify-content: center;
   height: 36px;
   max-width: max-content;
-  background-color: rgb(33, 33, 33, 0.07);
+  background: linear-gradient(145deg, #103b5d 0%, #1f5d86 100%);
   border-radius: 100px;
-  color: #2f2f2f;
+  color: #ffffff;
   line-height: 0;
   margin: 0.6em 0;
   font-size: 1rem;
   padding: 0 1.3em;
+  box-shadow: 0 16px 32px rgba(16, 59, 93, 0.24);
 }
 
 .footer ul {
@@ -149,7 +255,7 @@ body {
 }
 
 .nav__ul a {
-  color: #999;
+  color: #5f7b92;
 }
 
 .nav__ul--extra {
@@ -160,7 +266,7 @@ body {
 .legal {
   display: flex;
   flex-wrap: wrap;
-  color: #999;
+  color: #5f7b92;
 }
 
 .legal__links {
@@ -169,12 +275,42 @@ body {
 }
 
 .heart {
-  color: #2f2f2f;
+  color: #103b5d;
 }
 
 @media screen and (min-width: 24.375em) {
   .legal .legal__links {
     margin-left: auto;
+  }
+}
+
+@media screen and (max-width: 62em) {
+  .topBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .brandRow,
+  .formSection {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 40em) {
+  .brandRow,
+  .formSection form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .navList {
+    justify-content: center;
+  }
+
+  .input,
+  .barItem input,
+  .signupButton {
+    width: 100%;
   }
 }
 

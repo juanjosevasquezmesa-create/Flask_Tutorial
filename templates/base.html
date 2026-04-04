@@ -6,17 +6,18 @@
     <title>My site</title>
   </head>
 
-  <body>
+  <body class="site-body">
     <header>
       <div class="topBar">
-        <div class="">
-          <img src="{{url_for('static',filename = 'images/logo.jpg')}}" alt="Logo" class="logo">
-          <ul class="barItem">
+        <div class="brandRow">
+          <img src="{{url_for('static',filename = 'images/newodeLogo.jpeg')}}" alt="Logo" class="logo">
+          <ul class="barItem navList">
 
             <li><a href="/">HOME</a></li>
             <li><a href="/boats">BOATS</a></li>
             <li><a href="/create">CREATE BOATS</a></li>
             <li><a href="/delete">DELETE BOATS</a></li>
+            <li><a href="/boat-request">REQUEST PAGE</a></li>
           </ul>
         </div>
 
@@ -27,16 +28,16 @@
             <input type="submit" name="loginButton" value="LOGIN">
           </form>
 
-          <button class="barItem input" style="margin-left:10px;">
-            <a href="#">SIGNUP</a>
-          </button>
+          <a href="#" class="barItem signupButton">SIGNUP</a>
         </div>
 
       </div>
     </header>
 
-    {% block body %}
-    {% endblock %}
+    <main class="page-shell">
+      {% block body %}
+      {% endblock %}
+    </main>
     
     <footer class="footer">
       <div class="footer__addr">

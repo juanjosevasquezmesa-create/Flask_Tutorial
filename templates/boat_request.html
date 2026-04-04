@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block body %}
+<style>
+    .request-page {
+        width: min(760px, calc(100% - 32px));
+        margin: 20px auto 60px;
+        padding: 32px;
+        border: 1px solid #dbe7f3;
+        border-radius: 24px;
+        background: linear-gradient(145deg, #ffffff 0%, #f4f9ff 100%);
+        box-shadow: 0 16px 40px rgba(13, 38, 59, 0.12);
+    }
+
+    .request-page h1 {
+        margin: 0 0 10px;
+        color: #12263a;
+        font-size: 30px;
+    }
+
+    .request-page p {
+        margin: 0 0 24px;
+        color: #5f7b92;
+    }
+
+    .request-summary {
+        display: grid;
+        gap: 14px;
+    }
+
+    .request-summary-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 14px 0;
+        border-top: 1px solid #e3edf7;
+    }
+
+    .request-summary-label {
+        color: #5f7b92;
+        font-size: 13px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    .request-summary-value {
+        color: #16324a;
+        font-size: 16px;
+        font-weight: 600;
+        text-align: right;
+    }
+</style>
+
+<section class="request-page">
+    <h1>Request Details</h1>
+    <p>This page shows the information submitted from the boats form.</p>
+
+    <div class="request-summary">
+        <div class="request-summary-row">
+            <span class="request-summary-label">Full Name</span>
+            <span class="request-summary-value">{{ form_data['full_name'] or 'Not provided' }}</span>
+        </div>
+        <div class="request-summary-row">
+            <span class="request-summary-label">Email</span>
+            <span class="request-summary-value">{{ form_data['email'] or 'Not provided' }}</span>
+        </div>
+        <div class="request-summary-row">
+            <span class="request-summary-label">Phone</span>
+            <span class="request-summary-value">{{ form_data['phone'] or 'Not provided' }}</span>
+        </div>
+        <div class="request-summary-row">
+            <span class="request-summary-label">Preferred Boat Type</span>
+            <span class="request-summary-value">{{ form_data['boat_type'] or 'Not provided' }}</span>
+        </div>
+        <div class="request-summary-row">
+            <span class="request-summary-label">Trip Date</span>
+            <span class="request-summary-value">{{ form_data['trip_date'] or 'Not provided' }}</span>
+        </div>
+    </div>
+</section>
+{% endblock %}
