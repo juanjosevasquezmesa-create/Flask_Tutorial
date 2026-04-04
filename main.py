@@ -20,16 +20,25 @@ def user(name):
     return render_template('user.html', name=name)
 
 
-@app.route('/boats/id/<int:id>', methods=['GET'])
-def boat_request(id = 1):
-    form_data = {
-        'full_name': request.args.get('full_name', ''),
-        'email': request.args.get('email', ''),
-        'phone': request.args.get('phone', ''),
-        'boat_type': request.args.get('boat_type', ''),
-        'trip_date': request.args.get('trip_date', '')
+@app.route('/boats/filter', methods=['GET'])
+def boat_request():
+    form_data = { # the get(input "name", default) will deal with the defaults
+        'boatID': request.args.get('boatID', None), # the key for each will be the column name. The arguemnt entered is the name from the input in the boats.html file
+        'name': request.args.get('name', None),
+        'type': request.args.get('type', None),
+        'owner_id': request.args.get('owner_id', None),
+        'rental_price': request.args.get('rental_price', None)
     }
-    return render_template('boat_request.html', form_data=form_data)
+    whereStatement = f""
+    for key, value in form_data.items():
+        if value:
+            whereStatement += f"{key} = {value} and "
+    whereStatementList = whereStatement.rsplit(" and ", 1)
+    whereStatement = "".join(whereStatementList)
+    print(whereStatement)
+    # print(form_data)
+    
+    return render_template('boat_request.html', form_data=form_data, statement=whereStatement)
 
 
 # get all boats

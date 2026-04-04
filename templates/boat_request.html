@@ -58,24 +58,24 @@
 
     <div class="request-summary">
         <div class="request-summary-row">
-            <span class="request-summary-label">Full Name</span>
-            <span class="request-summary-value">{{ form_data['full_name'] or 'Not provided' }}</span>
+            <span class="request-summary-label">Boat ID</span>
+            <span class="request-summary-value">{{ form_data['boatID'] or 'Not provided' }}</span>
         </div>
         <div class="request-summary-row">
             <span class="request-summary-label">Email</span>
-            <span class="request-summary-value">{{ form_data['email'] or 'Not provided' }}</span>
+            <span class="request-summary-value">{{ form_data['name'] or 'Not provided' }}</span>
         </div>
         <div class="request-summary-row">
             <span class="request-summary-label">Phone</span>
-            <span class="request-summary-value">{{ form_data['phone'] or 'Not provided' }}</span>
+            <span class="request-summary-value">{{ form_data['type'] or 'Not provided' }}</span>
         </div>
         <div class="request-summary-row">
             <span class="request-summary-label">Preferred Boat Type</span>
-            <span class="request-summary-value">{{ form_data['boat_type'] or 'Not provided' }}</span>
+            <span class="request-summary-value">{{ form_data['owner_id'] or 'Not provided' }}</span>
         </div>
         <div class="request-summary-row">
             <span class="request-summary-label">Trip Date</span>
-            <span class="request-summary-value">{{ form_data['trip_date'] or 'Not provided' }}</span>
+            <span class="request-summary-value">{{ form_data['rental_price'] or 'Not provided' }}</span>
         </div>
     </div>
 </section>

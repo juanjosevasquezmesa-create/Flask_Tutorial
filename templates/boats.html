@@ -260,38 +260,38 @@
     <div class="column">
         <h1 class="page-title">Page {{ page }}</h1> <!-- page argument /boats/(int) -->
 
-        <form action="/boat-request" method="GET" class="request-form">
+        <form action="/boats/filter" method="GET" class="request-form"> <!-- This (action attribute) dictates where the user goes after clicking the submit button-->
             <h2 class="request-form-title">Request Boat Information</h2>
             <p class="request-form-text">Fill out the form and we will take you to a page with your submitted request details.</p>
 
             <div class="request-form-grid">
                 <div class="request-field">
-                    <label for="full_name" class="request-label">Full Name</label>
-                    <input id="full_name" name="full_name" type="text" class="request-input" placeholder="Enter your name" required>
+                    <label for="boatID" class="request-label">Boat ID</label>
+                    <input id="boatID" name="boatID" type="number" class="request-input" placeholder="Enter Boat ID" min="0">
                 </div>
 
                 <div class="request-field">
-                    <label for="email" class="request-label">Email</label>
-                    <input id="email" name="email" type="email" class="request-input" placeholder="Enter your email" required>
+                    <label for="name" class="request-label">Name of the Boat</label>
+                    <input id="name" name="name" type="text" class="request-input" placeholder="Enter the name of the boat">
                 </div>
 
                 <div class="request-field">
-                    <label for="phone" class="request-label">Phone</label>
-                    <input id="phone" name="phone" type="tel" class="request-input" placeholder="Enter your phone number" required>
+                    <label for="type" class="request-label">Type of Boat</label>
+                    <input id="type" name="type" type="text" class="request-input" placeholder="Enter your type number">
                 </div>
 
                 <div class="request-field">
-                    <label for="boat_type" class="request-label">Preferred Boat Type</label>
-                    <input id="boat_type" name="boat_type" type="text" class="request-input" placeholder="Sailboat, yacht, fishing boat..." required>
+                    <label for="owner_id" class="request-label">Owner ID</label>
+                    <input id="owner_id" name="owner_id" type="number" class="request-input" placeholder="Enter the desired owner ID" min = "1">
                 </div>
 
                 <div class="request-field request-field-full">
-                    <label for="trip_date" class="request-label">Trip Date</label>
-                    <input id="trip_date" name="trip_date" type="date" class="request-input" required>
+                    <label for="rental_price" class="request-label">Rental Price</label>
+                    <input id="rental_price" name="rental_price" type="number" class="request-input" min="0.00">
                 </div>
             </div>
 
-            <button type="submit" class="request-submit">View Request Page</button>
+            <button type="submit" class="request-submit">View Request Page</button> <!-- the action attribute in the form element routs the user-->
         </form>
 
         <div class="pagination_bar">
