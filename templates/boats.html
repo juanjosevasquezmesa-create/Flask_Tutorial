@@ -42,13 +42,13 @@
 
 {% extends "base.html" %}
 {% block body %}
-    {% set prev_page = page - 1 %}  <!-- variables in jinja --->
-    <div class="column">
-        <h3>Page {{ page }}</h3>
-
-        <div class="flex-box">
-            {% for boat in boats %}
-                <div class="boat">
+    <div class="flex-box">
+        
+        {% for boat in boats %}     <!-- for loops in jinja is just like python's. You can also try array slicing here: boats[:15]-->
+            <div class="boat">
+                <ul>
+                    <!-- boat is an object (dictionary) that holds all of the keys (column names) and values (the value assigned to the column and row)-->
+                    <li>Boat id: {{ boat['id'] }}</li>
                     <ul>
                         <li>Boat id: {{ boat['id'] }}</li>
                         <ul>

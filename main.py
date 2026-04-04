@@ -2,6 +2,9 @@ from flask import Flask, render_template, request
 from sqlalchemy import Column, Integer, String, Numeric, create_engine, text
 
 app = Flask(__name__)
+
+# initialize database
+# connection string is in the format mysql://user:password@server/database
 conn_str = "mysql://root:cset155@localhost/boatdb"
 engine = create_engine(conn_str, echo=True)
 conn = engine.connect()
@@ -10,7 +13,7 @@ conn = engine.connect()
 # render a file
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html') #returns mean if the decorator above runs the system will return this file to the webpage 
 
 
 # remember how to take user inputs?
@@ -20,56 +23,13 @@ def user(name):
 
 
 # get all boats
-# this is done to handle requests for two routes -
-@app.route('/boats/')
-@app.route('/boats/<page>')
-def get_boats(page=1):
-    page = int(page)  # request params always come as strings. So type conversion is necessary.
-    per_page = 10  # records to show per page
-    boats = conn.execute(text(f"SELECT * FROM boats LIMIT {per_page} OFFSET {(page - 1) * per_page}")).all()
+@app.route('/boats')
+def get_boats():
+    # local_session = Session(bind=engine)
+    # boats = local_session.query(BoatsModel).all()  # returns all boats
+    boats = conn.execute(text("select * from boats")).all() #boats is an array 
     print(boats)
-    return render_template('boats.html', boats=boats, page=page, per_page=per_page)
-
-
-@app.route('/create', methods=['GET'])
-def create_get_request():
-    return render_template('boats_create.html')
-
-
-@app.route('/create', methods=['POST'])
-def create_boat():
-    # you can access the values with request.from.name
-    # this name is the value of the name attribute in HTML form's input element
-    # ex: print(request.form['id'])
-    try:
-        conn.execute(
-            text("INSERT INTO boats values (:id, :name, :type, :owner_id, :rental_price)"),
-            request.form
-        )
-        return render_template('boats_create.html', error=None, success="Data inserted successfully!")
-    except Exception as e:
-        error = e.orig.args[1]
-        print(error)
-        return render_template('boats_create.html', error=error, success=None)
-
-
-@app.route('/delete', methods=['GET'])
-def delete_get_request():
-    return render_template('boats_delete.html')
-
-
-@app.route('/delete', methods=['POST'])
-def delete_boat():
-    try:
-        conn.execute(
-            text("DELETE FROM boats WHERE id = :id"),
-            request.form
-        )
-        return render_template('boats_delete.html', error=None, success="Data deleted successfully!")
-    except Exception as e:
-        error = e.orig.args[1]
-        print(error)
-        return render_template('boats_delete.html', error=error, success=None)
+    return render_template('boats.html', boats=boats[:10]) # boats is the parameter wiht the argument being an array of the first 10 values in the boats variable outside if this function
 
 
 if __name__ == '__main__':
