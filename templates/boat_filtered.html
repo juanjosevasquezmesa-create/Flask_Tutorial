@@ -1,4 +1,9 @@
+{% extends "base.html" %}
+{% block body %}
 <style>
+    h2 {
+        text-align: center
+    }
     .flex-box {
         display: flex;
         flex-wrap: wrap;
@@ -156,7 +161,7 @@
         line-height: 1.1;
     }
 
-    .request-form {
+    .filter-form {
         width: min(1140px, calc(100% - 32px));
         margin: 28px auto 36px;
         padding: 28px;
@@ -166,35 +171,35 @@
         box-shadow: 0 16px 40px rgba(13, 38, 59, 0.12);
     }
 
-    .request-form-title {
+    .filter-form-title {
         margin: 0 0 8px;
         color: #12263a;
         font-size: 26px;
     }
 
-    .request-form-text {
+    .filter-form-text {
         margin: 0 0 22px;
         color: #5f7b92;
         font-size: 15px;
     }
 
-    .request-form-grid {
+    .filter-form-grid {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 16px;
     }
 
-    .request-field {
+    .filter-field {
         display: flex;
         flex-direction: column;
         gap: 8px;
     }
 
-    .request-field-full {
+    .filter-field-full {
         grid-column: 1 / -1;
     }
 
-    .request-label {
+    .filter-label {
         color: #16324a;
         font-size: 13px;
         font-weight: 700;
@@ -202,7 +207,7 @@
         text-transform: uppercase;
     }
 
-    .request-input {
+    .filter-input {
         height: 48px;
         padding: 0 16px;
         border: 1px solid #dbe7f3;
@@ -213,13 +218,13 @@
         font-size: 15px;
     }
 
-    .request-input:focus {
+    .filter-input:focus {
         outline: none;
         border-color: #8cb8e8;
         box-shadow: 0 0 0 4px rgba(140, 184, 232, 0.2);
     }
 
-    .request-submit {
+    .filter-submit {
         margin-top: 20px;
         min-width: 190px;
         height: 48px;
@@ -245,52 +250,18 @@
             flex-wrap: wrap;
         }
 
-        .request-form-grid {
+        .filter-form-grid {
             grid-template-columns: 1fr;
         }
     }
-    
 </style>
+            <h1>Filtered Page</h1>
+            <h2>This page shows the filtered list.</h2>    
 
-{% extends "base.html" %}
-{% block body %}
-
-      
-    {% set prev_page = page - 1 %}  <!-- variables in jinja -->
-    <div class="column">
-        <h1 class="page-title">Page {{ page }}</h1> <!-- page argument /boats/(int) -->
-
-        <div class="pagination_bar">
-            {% if page - 3 >= 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 3) | string }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
-            {% endif %}
-
-            {% if page - 2 >= 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 2) | string }}" class="pagination_button"> {{ page - 2 }} </a> <!-- this is the left arrow -->
-            {% endif %}
-
-            {% if page > 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> {{ page -1 }} </a> <!-- this is the left arrow -->
-            {% endif %}
-
-            <a class="pagination_button is-active"> {{page}} </a> <!-- this is the current tab ie current number -->
-
-            {% if page + 1 <= total_pages %}
-                <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button" > {{ page + 1 }} </a> <!-- this is the following number -->
-            {% endif %}
-            
-            {% if page + 2 <= total_pages %}
-                <a href="{{ "/boats/"+ (page + 2) | string }}" class="pagination_button"> {{ page + 2 }} </a> <!-- this is 2 pages down -->
-            {% endif %}
-
-            {% if page + 3 <= total_pages %}
-                <a href="{{ "/boats/"+ (page + 3) | string }}" class="pagination_button"> > </a> <!-- this is the right arrow -->
-            {% endif %}
-        </div>  
 
         <div class="flex-box">
             {% for boat in boats %} <!-- runs a for loop through every object in the boats array as boat-->
-                <a href="/boats/id/{{ boat['boatID'] }}" class="boat-link">
+                <a href="/boats/id/{{ boat['boatID']}}" class="boat-link">
                     <div class="card boat">
                         <div class="card-body">
                             <span class="boat-id">Boat #{{ boat['boatID'] }}</span>
@@ -317,39 +288,29 @@
             {% endif %}
         </div>
 
-        <form action="/boats/filter" method="GET" class="request-form"> <!-- This (action attribute) dictates where the user goes after clicking the submit button-->
-            <h2 class="request-form-title">Request Boat Information</h2>
-            <p class="request-form-text">Fill out the form and we will take you to a page with your submitted request details.</p>
-
-            <div class="request-form-grid">
-                <div class="request-field">
-                    <label for="boatID" class="request-label">Boat ID</label>
-                    <input id="boatID" name="boatID" type="number" class="request-input" placeholder="Enter Boat ID" min="0">
-                </div>
-
-                <div class="request-field">
-                    <label for="name" class="request-label">Name of the Boat</label>
-                    <input id="name" name="name" type="text" class="request-input" placeholder="Enter the name of the boat">
-                </div>
-
-                <div class="request-field">
-                    <label for="type" class="request-label">Type of Boat</label>
-                    <input id="type" name="type" type="text" class="request-input" placeholder="Enter your type number">
-                </div>
-
-                <div class="request-field">
-                    <label for="owner_id" class="request-label">Owner ID</label>
-                    <input id="owner_id" name="owner_id" type="number" class="request-input" placeholder="Enter the desired owner ID" min="1">
-                </div>
-
-                <div class="request-field request-field-full">
-                    <label for="rental_price" class="request-label">Rental Price</label>
-                    <input id="rental_price" name="rental_price" type="number" class="request-input" min="0.00">
-                </div>
-            </div>
-
-            <button type="submit" class="request-submit">View Request Page</button> <!-- the action attribute in the form element routs the user-->
-        </form>
-
+<!--
+    <div class="filter-summary">
+        <div class="filter-summary-row">
+            <span class="filter-summary-label">Boat ID</span>
+            <span class="filter-summary-value">{{ form_data['boatID'] or 'Not provided' }}</span>
+        </div>
+        <div class="filter-summary-row">
+            <span class="filter-summary-label">Email</span>
+            <span class="filter-summary-value">{{ form_data['name'] or 'Not provided' }}</span>
+        </div>
+        <div class="filter-summary-row">
+            <span class="filter-summary-label">Phone</span>
+            <span class="filter-summary-value">{{ form_data['type'] or 'Not provided' }}</span>
+        </div>
+        <div class="filter-summary-row">
+            <span class="filter-summary-label">Preferred Boat Type</span>
+            <span class="filter-summary-value">{{ form_data['owner_id'] or 'Not provided' }}</span>
+        </div>
+        <div class="filter-summary-row">
+            <span class="filter-summary-label">Trip Date</span>
+            <span class="filter-summary-value">{{ form_data['rental_price'] or 'Not provided' }}</span>
+        </div>
     </div>
+-->
+</section>
 {% endblock %}

@@ -2,7 +2,7 @@
 {% block body %}
 <style>
     .form-page {
-        width: min(680px, calc(100% - 32px));
+        width: min(760px, calc(100% - 32px));
         margin: 24px auto 60px;
     }
 
@@ -59,10 +59,20 @@
         border: 1px solid #c8e8d5;
     }
 
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+    }
+
     .form-field {
         display: flex;
         flex-direction: column;
         gap: 8px;
+    }
+
+    .form-field.full {
+        grid-column: 1 / -1;
     }
 
     .form-label {
@@ -106,13 +116,26 @@
         cursor: pointer;
         box-shadow: 0 16px 32px rgba(16, 59, 93, 0.24);
     }
+
+    .help-text {
+        margin-top: 14px;
+        color: #5f7b92;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+        .form-grid {
+            grid-template-columns: 1fr;
+        }
+    }
 </style>
 
 <div class="form-page">
     <div class="form-card">
-        <span class="form-badge">Delete Boat</span>
-        <h1 class="form-title">Remove a Boat</h1>
-        <p class="form-text">Enter the boat ID below to delete an existing boat record.</p>
+        <span class="form-badge">Update Boat</span>
+        <h1 class="form-title">Edit an Existing Boat</h1>
+        <p class="form-text">Enter the boat ID you want to update, then fill in any fields you want to change. Leave a field blank if it should stay the same.</p>
 
         {% if error %}
             <div class="status-message error">{{ error }}</div>
@@ -122,14 +145,38 @@
             <div class="status-message success">{{ success }}</div>
         {% endif %}
 
-        <form action="/delete" method="POST">
-            <div class="form-field">
-                <label for="id" class="form-label">Boat ID</label>
-                <input id="id" type="number" name="id" placeholder="ID" class="input_field">
+        <form action="/update" method="POST">
+            <div class="form-grid">
+                <div class="form-field full">
+                    <label for="id" class="form-label">Boat ID</label>
+                    <input id="id" type="number" name="id" placeholder="Enter the boat ID to update" class="input_field" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="name" class="form-label">Boat Name</label>
+                    <input id="name" type="text" name="name" placeholder="New boat name" class="input_field">
+                </div>
+
+                <div class="form-field">
+                    <label for="type" class="form-label">Boat Type</label>
+                    <input id="type" type="text" name="type" placeholder="New boat type" class="input_field">
+                </div>
+
+                <div class="form-field">
+                    <label for="owner_id" class="form-label">Owner ID</label>
+                    <input id="owner_id" type="number" name="owner_id" placeholder="New owner ID" class="input_field">
+                </div>
+
+                <div class="form-field">
+                    <label for="rental_price" class="form-label">Rental Price</label>
+                    <input id="rental_price" type="number" name="rental_price" placeholder="New rental price" class="input_field" step="0.01">
+                </div>
             </div>
 
-            <input type="submit" value="Submit" class="input_submit">
+            <input type="submit" value="Update Boat" class="input_submit">
         </form>
+
+        <p class="help-text">This template is ready to use, but it still needs an `/update` route in [main.py](/c:/Users/juanj/OneDrive/Desktop/Flask_Tutorial/main.py) before the form can submit successfully.</p>
     </div>
 </div>
 {% endblock %}
