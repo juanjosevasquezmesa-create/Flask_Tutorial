@@ -148,8 +148,8 @@
         <form action="/update" method="POST">
             <div class="form-grid">
                 <div class="form-field full">
-                    <label for="id" class="form-label">Boat ID</label>
-                    <input id="id" type="number" name="id" placeholder="Enter the boat ID to update" class="input_field" required>
+                    <label for="boatID" class="form-label">Boat ID</label>
+                    <input id="boatID" type="number" name="boatID" placeholder="Enter the boat ID to update" class="input_field" required>
                 </div>
 
                 <div class="form-field">
@@ -175,8 +175,7 @@
 
             <input type="submit" value="Update Boat" class="input_submit">
         </form>
-
-        <p class="help-text">This template is ready to use, but it still needs an `/update` route in [main.py](/c:/Users/juanj/OneDrive/Desktop/Flask_Tutorial/main.py) before the form can submit successfully.</p>
+        <p class="help-text">Enter the boat ID to find the record, then only fill in the fields you want to change.</p>
     </div>
 </div>
 {% endblock %}

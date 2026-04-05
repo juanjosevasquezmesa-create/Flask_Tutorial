@@ -29,6 +29,19 @@ def user(name):
 @app.route('/boats/')
 @app.route('/boats/<page>')
 def get_boats(page=1):
+    # Read the selected sort options from the URL query string.
+    sort_by = request.args.get('sort_by', 'boatID')
+    sort_dir = request.args.get('sort_dir', 'asc')
+
+    # Only allow known column names and directions so the ORDER BY stays safe.
+    allowed_sort_columns = {'boatID', 'name', 'type', 'owner_id', 'rental_price'}
+    allowed_sort_directions = {'asc', 'desc'}
+
+    if sort_by not in allowed_sort_columns:
+        sort_by = 'boatID'
+    if sort_dir not in allowed_sort_directions:
+        sort_dir = 'asc'
+
     page = int(page)  # request params always come as strings. So type conversion is necessary. IMPORTANT
     if page < 1:
         page = 1
@@ -38,13 +51,28 @@ def get_boats(page=1):
     total_pages = max(1, ceil(total_boats / per_page))
     if page > total_pages:
         page = total_pages
-        
+
     # if page < 1 or page > total_pages:
     #     abort(404)
 
-    boats = conn.execute(text(f"SELECT * FROM boats LIMIT {per_page} OFFSET {(page - 1) * per_page}")).all() # the -1 is due to indexing of data so page 1 will have 1-10 ...
+    boats = conn.execute(
+        text(
+            f"SELECT * FROM boats ORDER BY {sort_by} {sort_dir} "
+            f"LIMIT {per_page} OFFSET {(page - 1) * per_page}"
+        )
+    ).all() # the -1 is due to indexing of data so page 1 will have 1-10 ...
     print(boats)
-    return render_template('boats.html', boats=boats, page=page, per_page=per_page, count=total_boats, total_pages=total_pages) # you have to do variable=variable
+    return render_template(
+        'boats.html',
+        boats=boats,
+        page=page,
+        per_page=per_page,
+        count=total_boats,
+        total_pages=total_pages,
+        sort_by=sort_by,
+        sort_dir=sort_dir
+    ) # you have to do variable=variable
+
 
 
 # methods=['GET'] means this route responds to normal page visits and URL query strings.
@@ -152,22 +180,67 @@ def delete_boat():
 # this will run when the user first goes to the update page and handles the request to take the form request
 @app.route('/update', methods=['GET'])
 def update_boat_request():
+    # This shows the update form page when the user visits /update in the browser.
     return render_template('boats_update.html')
 
 @app.route('/update', methods=['POST'])
 def update_boat():
-    try:        
+    try:
+        # request.form reads the values sent by the HTML form because this route uses POST.
+        form_data_update = {
+            # boatID is used to decide which existing row should be updated.
+            'boatID': request.form.get('boatID'),
+            # The remaining fields are optional; blank ones will keep their current database values.
+            'name': request.form.get('name'),
+            'type': request.form.get('type'),
+            'owner_id': request.form.get('owner_id'),
+            'rental_price': request.form.get('rental_price')
+        }
+
+        # Find the current boat record first so we can:
+        # 1. verify it exists
+        # 2. reuse existing values for fields the user leaves blank
+        boat = conn.execute(
+            text("SELECT * FROM boats WHERE BoatID = :boatID"),
+            {'boatID': form_data_update['boatID']}
+        ).mappings().first()
+
+        # .first() returns None if no matching row exists.
+        if boat is None:
+            # Raising ValueError sends execution to the except block below.
+            raise ValueError("Record not found")
+
+        # Build the final values that will be written to the database.
+        # If the user leaves a field empty, we keep the current value from the selected row.
+        update_values = {
+            'boatID': form_data_update['boatID'],
+            'name': form_data_update['name'] if form_data_update['name'] else boat['name'],
+            'type': form_data_update['type'] if form_data_update['type'] else boat['type'],
+            'owner_id': form_data_update['owner_id'] if form_data_update['owner_id'] else boat['owner_id'],
+            'rental_price': form_data_update['rental_price'] if form_data_update['rental_price'] else boat['rental_price']
+        }
+
+        # Run one SQL UPDATE statement to change the row with the matching BoatID.
         conn.execute(
-            text("INSERT INTO boats values (:id, :name, :type, :owner_id, :rental_price)"), #these are variables with the name coming after the ':' # these come from the form element in the html file
-            request.form
+            text("""
+                UPDATE boats
+                SET name = :name,
+                    type = :type,
+                    owner_id = :owner_id,
+                    rental_price = :rental_price
+                WHERE BoatID = :boatID
+            """),
+            update_values
         )
-        
+        # Save the database changes permanently.
+        conn.commit()
+        # Return the same update page with a success message after the update finishes.
+        return render_template('boats_update.html', error=None, success="Boat updated successfully!")
     except Exception as e:
         # This catches both database errors and the ValueError raised above.
         error = e.orig.args[1] if hasattr(e, "orig") else str(e)
         print(error)
-        
+        # Return the update page again, but this time show the error message.
         return render_template('boats_update.html', error=error, success=None)
-    return render_template('boats_update.html')
 if __name__ == '__main__':
     app.run(debug=True)

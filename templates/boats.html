@@ -156,6 +156,88 @@
         line-height: 1.1;
     }
 
+    .sort-form {
+        width: min(1140px, calc(100% - 32px));
+        margin: 0 auto 24px;
+        padding: 22px 24px;
+        border: 1px solid #dbe7f3;
+        border-radius: 24px;
+        background: linear-gradient(145deg, #ffffff 0%, #f4f9ff 100%);
+        box-shadow: 0 16px 40px rgba(13, 38, 59, 0.12);
+    }
+
+    .sort-title {
+        margin: 0 0 14px;
+        color: #12263a;
+        font-size: 22px;
+    }
+
+    .sort-groups {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 22px;
+        align-items: end;
+    }
+
+    .sort-group {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .sort-group-label {
+        color: #16324a;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .sort-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .sort-option {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border: 1px solid #dbe7f3;
+        border-radius: 14px;
+        background: #ffffff;
+        color: #16324a;
+        box-shadow: 0 10px 24px rgba(13, 38, 59, 0.08);
+        font-size: 14px;
+        font-weight: 600;
+    }
+
+    .sort-option.is-active {
+        border-color: #103b5d;
+        background: linear-gradient(145deg, #103b5d 0%, #1f5d86 100%);
+        color: #ffffff;
+        box-shadow: 0 16px 32px rgba(16, 59, 93, 0.24);
+    }
+
+    .sort-option input {
+        accent-color: #103b5d;
+    }
+
+    .sort-submit {
+        min-width: 150px;
+        height: 44px;
+        border: 1px solid #103b5d;
+        border-radius: 14px;
+        background: linear-gradient(145deg, #103b5d 0%, #1f5d86 100%);
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        cursor: pointer;
+        box-shadow: 0 16px 32px rgba(16, 59, 93, 0.24);
+    }
+
     .request-form {
         width: min(1140px, calc(100% - 32px));
         margin: 28px auto 36px;
@@ -248,6 +330,11 @@
         .request-form-grid {
             grid-template-columns: 1fr;
         }
+
+        .sort-groups {
+            flex-direction: column;
+            align-items: stretch;
+        }
     }
     
 </style>
@@ -260,31 +347,79 @@
     <div class="column">
         <h1 class="page-title">Page {{ page }}</h1> <!-- page argument /boats/(int) -->
 
+        <form action="{{ '/boats/' ~ page }}" method="GET" class="sort-form">
+            <h2 class="sort-title">Sort Boats</h2>
+
+            <div class="sort-groups">
+                <div class="sort-group">
+                    <span class="sort-group-label">Sort By</span>
+                    <div class="sort-options">
+                        <label class="sort-option {% if sort_by == 'boatID' %}is-active{% endif %}">
+                            <input type="radio" name="sort_by" value="boatID" {% if sort_by == 'boatID' %}checked{% endif %}>
+                            Boat ID
+                        </label>
+                        <label class="sort-option {% if sort_by == 'name' %}is-active{% endif %}">
+                            <input type="radio" name="sort_by" value="name" {% if sort_by == 'name' %}checked{% endif %}>
+                            Name
+                        </label>
+                        <label class="sort-option {% if sort_by == 'type' %}is-active{% endif %}">
+                            <input type="radio" name="sort_by" value="type" {% if sort_by == 'type' %}checked{% endif %}>
+                            Type
+                        </label>
+                        <label class="sort-option {% if sort_by == 'owner_id' %}is-active{% endif %}">
+                            <input type="radio" name="sort_by" value="owner_id" {% if sort_by == 'owner_id' %}checked{% endif %}>
+                            Owner ID
+                        </label>
+                        <label class="sort-option {% if sort_by == 'rental_price' %}is-active{% endif %}">
+                            <input type="radio" name="sort_by" value="rental_price" {% if sort_by == 'rental_price' %}checked{% endif %}>
+                            Rental Price
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sort-group">
+                    <span class="sort-group-label">Direction</span>
+                    <div class="sort-options">
+                        <label class="sort-option {% if sort_dir == 'asc' %}is-active{% endif %}">
+                            <input type="radio" name="sort_dir" value="asc" {% if sort_dir == 'asc' %}checked{% endif %}>
+                            Ascending
+                        </label>
+                        <label class="sort-option {% if sort_dir == 'desc' %}is-active{% endif %}">
+                            <input type="radio" name="sort_dir" value="desc" {% if sort_dir == 'desc' %}checked{% endif %}>
+                            Descending
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="sort-submit">Apply Sort</button>
+            </div>
+        </form>
+
         <div class="pagination_bar">
             {% if page - 3 >= 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 3) | string }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
+                <a href= "{{ "/boats/"+ (page - 3) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
             {% endif %}
 
             {% if page - 2 >= 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 2) | string }}" class="pagination_button"> {{ page - 2 }} </a> <!-- this is the left arrow -->
+                <a href= "{{ "/boats/"+ (page - 2) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> {{ page - 2 }} </a> <!-- this is the left arrow -->
             {% endif %}
 
             {% if page > 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 1) | string }}" class="pagination_button"> {{ page -1 }} </a> <!-- this is the left arrow -->
+                <a href= "{{ "/boats/"+ (page - 1) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> {{ page -1 }} </a> <!-- this is the left arrow -->
             {% endif %}
 
             <a class="pagination_button is-active"> {{page}} </a> <!-- this is the current tab ie current number -->
 
             {% if page + 1 <= total_pages %}
-                <a href="{{ "/boats/"+ (page + 1) | string }}" class="pagination_button" > {{ page + 1 }} </a> <!-- this is the following number -->
+                <a href="{{ "/boats/"+ (page + 1) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button" > {{ page + 1 }} </a> <!-- this is the following number -->
             {% endif %}
             
             {% if page + 2 <= total_pages %}
-                <a href="{{ "/boats/"+ (page + 2) | string }}" class="pagination_button"> {{ page + 2 }} </a> <!-- this is 2 pages down -->
+                <a href="{{ "/boats/"+ (page + 2) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> {{ page + 2 }} </a> <!-- this is 2 pages down -->
             {% endif %}
 
             {% if page + 3 <= total_pages %}
-                <a href="{{ "/boats/"+ (page + 3) | string }}" class="pagination_button"> > </a> <!-- this is the right arrow -->
+                <a href="{{ "/boats/"+ (page + 3) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> > </a> <!-- this is the right arrow -->
             {% endif %}
         </div>  
 
@@ -295,9 +430,14 @@
                         <div class="card-body">
                             <span class="boat-id">Boat #{{ boat['boatID'] }}</span>
                             <h3 class="boat-name">{{ boat['name'] }}</h3>
-                            <p class="boat-type">{{ boat['type'] }}</p>
+                            <p class="boat-type"> </p>
+                            <!--<p class="boat-type">{{ boat['type'] }}</p>-->
 
                             <div class="boat-details">
+                                <div class="detail-row">
+                                    <span class="detail-label">Boat Type</span>
+                                    <span class="detail-value">{{ boat['type'] }}</span>
+                                </div>
                                 <div class="detail-row">
                                     <span class="detail-label">Owner ID</span>
                                     <span class="detail-value">{{ boat['owner_id'] }}</span>
