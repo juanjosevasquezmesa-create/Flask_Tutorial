@@ -185,25 +185,18 @@
         gap: 10px;
     }
 
-    .sort-group.centered-group {
-        align-items: center;
-        text-align: center;
-    }
-
-    .sort-group.bubbly-group {
-        padding: 16px 18px;
-        border: 1px solid #dbe7f3;
-        border-radius: 22px;
-        background: radial-gradient(circle at top left, #ffffff 0%, #eef6ff 100%);
-        box-shadow: 0 14px 28px rgba(13, 38, 59, 0.1);
-    }
-
     .sort-group-label {
         color: #16324a;
         font-size: 13px;
         font-weight: 700;
         letter-spacing: 0.04em;
         text-transform: uppercase;
+    }
+
+    .sort-group-text {
+        color: #5f7b92;
+        font-size: 14px;
+        font-weight: 600;
     }
 
     .sort-options {
@@ -251,153 +244,22 @@
         box-shadow: 0 16px 32px rgba(16, 59, 93, 0.24);
     }
 
-    .sort-submit-wrap {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     .filter-select {
         min-width: 220px;
-        height: 48px;
-        padding: 0 46px 0 16px;
-        border: 1px solid #bcd4ea;
-        border-radius: 18px;
-        background:
-            linear-gradient(145deg, #ffffff 0%, #eef6ff 100%);
+        height: 44px;
+        padding: 0 14px;
+        border: 1px solid #dbe7f3;
+        border-radius: 14px;
+        background: #ffffff;
         color: #16324a;
-        box-shadow: 0 12px 26px rgba(13, 38, 59, 0.1);
+        box-shadow: 0 10px 24px rgba(13, 38, 59, 0.08);
         font-size: 14px;
-        font-weight: 700;
-        appearance: none;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        background-image:
-            linear-gradient(145deg, #ffffff 0%, #eef6ff 100%),
-            url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath fill='%23103b5d' d='M3.2 5.6L8 10.4l4.8-4.8'/%3E%3C/svg%3E");
-        background-repeat: no-repeat, no-repeat;
-        background-position: 0 0, right 14px center;
-        background-size: auto, 16px;
-        cursor: pointer;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-    }
-
-    .filter-select:hover,
-    .filter-select:focus {
-        border-color: #8cb8e8;
-        box-shadow: 0 16px 30px rgba(13, 38, 59, 0.14);
-        outline: none;
-    }
-
-    .filter-select option {
-        background: #f4f9ff;
-        color: #16324a;
         font-weight: 600;
     }
 
-    .price-range-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 12px;
-        width: min(360px, 100%);
-    }
-
-    .price-pill {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        padding: 12px 14px;
-        border: 1px solid #dbe7f3;
-        border-radius: 18px;
-        background: #ffffff;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 10px 24px rgba(13, 38, 59, 0.08);
-    }
-
-    .price-pill-label {
-        color: #5f7b92;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-    }
-
-    .price-number-input {
-        height: 42px;
-        padding: 0 12px;
-        border: 1px solid #dbe7f3;
-        border-radius: 14px;
-        background: linear-gradient(145deg, #ffffff 0%, #f6fbff 100%);
-        color: #16324a;
-        box-shadow: 0 8px 18px rgba(13, 38, 59, 0.08);
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    .price-number-input:focus {
-        outline: none;
-        border-color: #8cb8e8;
-        box-shadow: 0 0 0 4px rgba(140, 184, 232, 0.2);
-    }
-
-    .price-range-input {
-        width: 100%;
-        height: 28px;
-        margin: 0;
-        background: transparent;
-        appearance: none;
-        -webkit-appearance: none;
-        cursor: pointer;
-    }
-
-    .price-range-input:focus {
-        outline: none;
-    }
-
-    .price-range-input::-webkit-slider-runnable-track {
-        height: 12px;
-        border-radius: 999px;
-        background: linear-gradient(90deg, #dceaf7 0%, #b8d2eb 100%);
-        box-shadow: inset 0 1px 2px rgba(16, 59, 93, 0.14);
-    }
-
-    .price-range-input::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 28px;
-        height: 28px;
-        margin-top: -8px;
-        border-radius: 50%;
-        border: 6px solid #2f63ff;
-        background: #29b8ff;
-        box-shadow: 0 10px 20px rgba(16, 59, 93, 0.18);
-    }
-
-    .price-range-input::-moz-range-track {
-        height: 12px;
-        border: none;
-        border-radius: 999px;
-        background: linear-gradient(90deg, #dceaf7 0%, #b8d2eb 100%);
-        box-shadow: inset 0 1px 2px rgba(16, 59, 93, 0.14);
-    }
-
-    .price-range-input::-moz-range-thumb {
-        width: 28px;
-        height: 28px;
-        border: 6px solid #2f63ff;
-        border-radius: 50%;
-        background: #29b8ff;
-        box-shadow: 0 10px 20px rgba(16, 59, 93, 0.18);
-    }
-
-    .price-range-input::-moz-range-progress {
-        height: 12px;
-        border-radius: 999px;
-        background: linear-gradient(90deg, #103b5d 0%, #1f5d86 100%);
-    }
-
-    .price-value {
-        color: #16324a;
-        font-size: 14px;
-        font-weight: 700;
+    .price-range {
+        width: min(320px, 100%);
+        accent-color: #103b5d;
     }
 
     .request-form {
@@ -513,7 +375,7 @@
             <h2 class="sort-title">Sort Boats</h2>
 
             <div class="sort-groups">
-                <div class="sort-group bubbly-group">
+                <div class="sort-group">
                     <span class="sort-group-label">Sort By</span>
                     <div class="sort-options">
                         <label class="sort-option {% if sort_by == 'boatID' %}is-active{% endif %}">
@@ -539,7 +401,7 @@
                     </div>
                 </div>
 
-                <div class="sort-group bubbly-group">
+                <div class="sort-group">
                     <span class="sort-group-label">Direction</span>
                     <div class="sort-options">
                         <label class="sort-option {% if sort_dir == 'asc' %}is-active{% endif %}">
@@ -553,108 +415,71 @@
                     </div>
                 </div>
 
-                <div class="sort-group bubbly-group">
-                    <span class="sort-group-label">Price Range</span>
-                    <div class="price-range-grid">
-                        <div class="price-pill">
-                            <label for="min_price" class="price-pill-label">Minimum</label>
-                            <input
-                                id="min_price_number"
-                                name="min_price"
-                                class="price-number-input"
-                                type="number"
-                                min="{{ price_min_bound }}"
-                                max="{{ price_max_bound }}"
-                                step="0.01"
-                                value="{{ min_price if min_price != '' else price_min_bound }}"
-                            >
-                            <input
-                                id="min_price"
-                                class="price-range-input"
-                                type="range"
-                                min="{{ price_min_bound }}"
-                                max="{{ price_max_bound }}"
-                                value="{{ min_price if min_price != '' else price_min_bound }}"
-                            >
-                            <span id="minPriceValue" class="price-value">
-                                ${{ min_price if min_price != '' else price_min_bound }}
-                            </span>
-                        </div>
-
-                        <div class="price-pill">
-                            <label for="max_price" class="price-pill-label">Maximum</label>
-                            <input
-                                id="max_price_number"
-                                name="max_price"
-                                class="price-number-input"
-                                type="number"
-                                min="{{ price_min_bound }}"
-                                max="{{ price_max_bound }}"
-                                step="0.01"
-                                value="{{ max_price if max_price != '' else price_max_bound }}"
-                            >
-                            <input
-                                id="max_price"
-                                class="price-range-input"
-                                type="range"
-                                min="{{ price_min_bound }}"
-                                max="{{ price_max_bound }}"
-                                value="{{ max_price if max_price != '' else price_max_bound }}"
-                            >
-                            <span id="maxPriceValue" class="price-value">
-                                ${{ max_price if max_price != '' else price_max_bound }}
-                            </span>
-                        </div>
-                    </div>
+                <div class="sort-group">
+                    <span class="sort-group-label">Max Price On Page</span>
+                    <input
+                        id="priceFilter"
+                        class="price-range"
+                        type="range"
+                        min="0"
+                        max="{% if boats|length > 0 %}{{ boats | map(attribute='rental_price') | max }}{% else %}0{% endif %}"
+                        value="{% if boats|length > 0 %}{{ boats | map(attribute='rental_price') | max }}{% else %}0{% endif %}"
+                    >
+                    <span id="priceFilterValue" class="sort-group-text">
+                        Up to ${% if boats|length > 0 %}{{ boats | map(attribute='rental_price') | max }}{% else %}0{% endif %}
+                    </span>
                 </div>
 
-                <div class="sort-group bubbly-group centered-group">
+                <div class="sort-group">
                     <label for="typeFilter" class="sort-group-label">Boat Type On Page</label>
-                    <select id="typeFilter" name="boat_type" class="filter-select">
+                    <select id="typeFilter" class="filter-select">
                         <option value="">All Types</option>
-                        {% for type_name in boat_types %}
-                            <option value="{{ type_name }}" {% if boat_type_filter == type_name %}selected{% endif %}>{{ type_name }}</option>
+                        {% for type_name in boats | map(attribute='type') | unique | sort %}
+                            <option value="{{ type_name }}">{{ type_name }}</option>
                         {% endfor %}
                     </select>
                 </div>
 
-                <div class="sort-submit-wrap">
-                    <button type="submit" class="sort-submit">Apply Sort</button>
-                </div>
+                <button type="submit" class="sort-submit">Apply Sort</button>
             </div>
         </form>
 
         <div class="pagination_bar">
             {% if page - 3 >= 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 3) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}&min_price={{ min_price }}&max_price={{ max_price }}&boat_type={{ boat_type_filter }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
+                <a href= "{{ "/boats/"+ (page - 3) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> < </a> <!-- this is the left arrow -->
             {% endif %}
 
             {% if page - 2 >= 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 2) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}&min_price={{ min_price }}&max_price={{ max_price }}&boat_type={{ boat_type_filter }}" class="pagination_button"> {{ page - 2 }} </a> <!-- this is the left arrow -->
+                <a href= "{{ "/boats/"+ (page - 2) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> {{ page - 2 }} </a> <!-- this is the left arrow -->
             {% endif %}
 
             {% if page > 1 %} <!-- added after and this is done becuase if the user decided to click the arrow when they are on page 1 it will cause an error page to show up-->
-                <a href= "{{ "/boats/"+ (page - 1) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}&min_price={{ min_price }}&max_price={{ max_price }}&boat_type={{ boat_type_filter }}" class="pagination_button"> {{ page -1 }} </a> <!-- this is the left arrow -->
+                <a href= "{{ "/boats/"+ (page - 1) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> {{ page -1 }} </a> <!-- this is the left arrow -->
             {% endif %}
 
             <a class="pagination_button is-active"> {{page}} </a> <!-- this is the current tab ie current number -->
 
             {% if page + 1 <= total_pages %}
-                <a href="{{ "/boats/"+ (page + 1) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}&min_price={{ min_price }}&max_price={{ max_price }}&boat_type={{ boat_type_filter }}" class="pagination_button" > {{ page + 1 }} </a> <!-- this is the following number -->
+                <a href="{{ "/boats/"+ (page + 1) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button" > {{ page + 1 }} </a> <!-- this is the following number -->
             {% endif %}
             
             {% if page + 2 <= total_pages %}
-                <a href="{{ "/boats/"+ (page + 2) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}&min_price={{ min_price }}&max_price={{ max_price }}&boat_type={{ boat_type_filter }}" class="pagination_button"> {{ page + 2 }} </a> <!-- this is 2 pages down -->
+                <a href="{{ "/boats/"+ (page + 2) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> {{ page + 2 }} </a> <!-- this is 2 pages down -->
             {% endif %}
 
             {% if page + 3 <= total_pages %}
-                <a href="{{ "/boats/"+ (page + 3) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}&min_price={{ min_price }}&max_price={{ max_price }}&boat_type={{ boat_type_filter }}" class="pagination_button"> > </a> <!-- this is the right arrow -->
+                <a href="{{ "/boats/"+ (page + 3) | string }}?sort_by={{ sort_by }}&sort_dir={{ sort_dir }}" class="pagination_button"> > </a> <!-- this is the right arrow -->
             {% endif %}
         </div>  
 
         <div class="flex-box">
             {% for boat in boats %} <!-- runs a for loop through every object in the boats array as boat-->
-                <a href="/boats/id/{{ boat['boatID'] }}" class="boat-link">
+                <a
+                    href="/boats/id/{{ boat['boatID'] }}"
+                    class="boat-link"
+                    data-boat-type="{{ boat['type'] }}"
+                    data-rental-price="{{ boat['rental_price'] }}"
+                >
                     <div class="card boat">
                         <div class="card-body">
                             <span class="boat-id">Boat #{{ boat['boatID'] }}</span>
@@ -721,98 +546,33 @@
         </form>
 
     </div>
+
     <script>
-        const sortForm = document.querySelector('.sort-form');
-        const sortRadios = document.querySelectorAll('.sort-form input[type="radio"]');
-        const minPriceInput = document.getElementById('min_price');
-        const maxPriceInput = document.getElementById('max_price');
-        const minPriceNumber = document.getElementById('min_price_number');
-        const maxPriceNumber = document.getElementById('max_price_number');
-        const minPriceValue = document.getElementById('minPriceValue');
-        const maxPriceValue = document.getElementById('maxPriceValue');
+        const priceFilter = document.getElementById('priceFilter');
+        const priceFilterValue = document.getElementById('priceFilterValue');
+        const typeFilter = document.getElementById('typeFilter');
+        const boatCards = document.querySelectorAll('.boat-link');
 
-        function updatePriceLabels() {
-            if (minPriceInput && minPriceValue) {
-                minPriceValue.textContent = `$${minPriceInput.value}`;
-            }
-            if (maxPriceInput && maxPriceValue) {
-                maxPriceValue.textContent = `$${maxPriceInput.value}`;
-            }
-        }
+        function applyClientFilters() {
+            const selectedType = typeFilter.value.toLowerCase();
+            const maxPrice = Number(priceFilter.value);
 
-        function syncFromSlider() {
-            if (minPriceInput && minPriceNumber) {
-                minPriceNumber.value = minPriceInput.value;
-            }
-            if (maxPriceInput && maxPriceNumber) {
-                maxPriceNumber.value = maxPriceInput.value;
-            }
-            updatePriceLabels();
-        }
+            priceFilterValue.textContent = `Up to $${priceFilter.value}`;
 
-        function syncFromNumber() {
-            if (minPriceInput && minPriceNumber) {
-                minPriceInput.value = minPriceNumber.value || minPriceInput.min;
-            }
-            if (maxPriceInput && maxPriceNumber) {
-                maxPriceInput.value = maxPriceNumber.value || maxPriceInput.max;
-            }
-            updatePriceLabels();
-        }
+            boatCards.forEach((card) => {
+                const boatType = (card.dataset.boatType || '').toLowerCase();
+                const rentalPrice = Number(card.dataset.rentalPrice || 0);
+                const matchesType = !selectedType || boatType === selectedType;
+                const matchesPrice = rentalPrice <= maxPrice;
 
-        sortRadios.forEach((radio) => {
-            radio.addEventListener('change', () => {
-                if (sortForm) {
-                    sortForm.submit();
-                }
-            });
-        });
-
-        if (minPriceInput) {
-            minPriceInput.addEventListener('input', syncFromSlider);
-            minPriceInput.addEventListener('change', () => {
-                if (sortForm) {
-                    sortForm.submit();
-                }
+                card.style.display = matchesType && matchesPrice ? 'block' : 'none';
             });
         }
 
-        if (maxPriceInput) {
-            maxPriceInput.addEventListener('input', syncFromSlider);
-            maxPriceInput.addEventListener('change', () => {
-                if (sortForm) {
-                    sortForm.submit();
-                }
-            });
+        if (priceFilter && typeFilter) {
+            priceFilter.addEventListener('input', applyClientFilters);
+            typeFilter.addEventListener('change', applyClientFilters);
+            applyClientFilters();
         }
-
-        if (minPriceNumber) {
-            minPriceNumber.addEventListener('input', syncFromNumber);
-            minPriceNumber.addEventListener('change', () => {
-                syncFromNumber();
-                if (sortForm) {
-                    sortForm.submit();
-                }
-            });
-        }
-
-        if (maxPriceNumber) {
-            maxPriceNumber.addEventListener('input', syncFromNumber);
-            maxPriceNumber.addEventListener('change', () => {
-                syncFromNumber();
-                if (sortForm) {
-                    sortForm.submit();
-                }
-            });
-        }
-
-        syncFromNumber();
     </script>
-    <!--
-    <script>
-        Previous client-side filtering JavaScript lived here.
-        The price and type filtering now come from the Python /boats route instead,
-        so this script is intentionally commented out.
-    </script>
-    -->
 {% endblock %}

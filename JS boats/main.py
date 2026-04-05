@@ -30,12 +30,8 @@ def user(name):
 @app.route('/boats/<page>')
 def get_boats(page=1):
     # Read the selected sort options from the URL query string.
-    # these variable come from the name of the inputs for the filters
     sort_by = request.args.get('sort_by', 'boatID')
     sort_dir = request.args.get('sort_dir', 'asc')
-    min_price = request.args.get('min_price', '')
-    max_price = request.args.get('max_price', '')
-    boat_type_filter = request.args.get('boat_type', '')
 
     # Only allow known column names and directions so the ORDER BY stays safe.
     allowed_sort_columns = {'boatID', 'name', 'type', 'owner_id', 'rental_price'}
@@ -49,29 +45,9 @@ def get_boats(page=1):
     page = int(page)  # request params always come as strings. So type conversion is necessary. IMPORTANT
     if page < 1:
         page = 1
-
-    filter_clauses = []
-    query_params = {}
-
-    if min_price: #if there is a minimum price this will add to the query
-        filter_clauses.append("rental_price >= :min_price")
-        query_params['min_price'] = min_price
-    if max_price:
-        filter_clauses.append("rental_price <= :max_price")
-        query_params['max_price'] = max_price
-    if boat_type_filter:
-        filter_clauses.append("type = :boat_type")
-        query_params['boat_type'] = boat_type_filter
-
-    where_clause = ""
-    if filter_clauses:
-        where_clause = " WHERE " + " AND ".join(filter_clauses)
-
+    
     per_page = 30  # records to show per page
-    total_boats = conn.execute(
-        text(f"SELECT count(*) FROM boats{where_clause}"),
-        query_params
-    ).scalar()
+    total_boats = conn.execute(text("SELECT count(*) FROM boats")).scalar()
     total_pages = max(1, ceil(total_boats / per_page))
     if page > total_pages:
         page = total_pages
@@ -79,23 +55,11 @@ def get_boats(page=1):
     # if page < 1 or page > total_pages:
     #     abort(404)
 
-    price_stats = conn.execute(
-        text("SELECT COALESCE(MIN(rental_price), 0) AS min_price, COALESCE(MAX(rental_price), 0) AS max_price FROM boats")
-    ).mappings().first()
-
-    boat_types = conn.execute(
-        text("SELECT DISTINCT type FROM boats ORDER BY type ASC")
-    ).scalars().all()
-
-    query_params['limit'] = per_page
-    query_params['offset'] = (page - 1) * per_page
-
     boats = conn.execute(
         text(
-            f"SELECT * FROM boats{where_clause} ORDER BY {sort_by} {sort_dir} "
-            "LIMIT :limit OFFSET :offset"
-        ),
-        query_params
+            f"SELECT * FROM boats ORDER BY {sort_by} {sort_dir} "
+            f"LIMIT {per_page} OFFSET {(page - 1) * per_page}"
+        )
     ).all() # the -1 is due to indexing of data so page 1 will have 1-10 ...
     print(boats)
     return render_template(
@@ -106,13 +70,7 @@ def get_boats(page=1):
         count=total_boats,
         total_pages=total_pages,
         sort_by=sort_by,
-        sort_dir=sort_dir,
-        min_price=min_price,
-        max_price=max_price,
-        boat_type_filter=boat_type_filter,
-        price_min_bound=price_stats['min_price'],
-        price_max_bound=price_stats['max_price'],
-        boat_types=boat_types
+        sort_dir=sort_dir
     ) # you have to do variable=variable
 
 
