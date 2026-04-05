@@ -83,6 +83,8 @@ def get_boats(page=1):
         text("SELECT COALESCE(MIN(rental_price), 0) AS min_price, COALESCE(MAX(rental_price), 0) AS max_price FROM boats")
     ).mappings().first()
 
+    price_max_bound = price_stats['max_price'] + 1
+
     boat_types = conn.execute(
         text("SELECT DISTINCT type FROM boats ORDER BY type ASC")
     ).scalars().all()
@@ -111,7 +113,7 @@ def get_boats(page=1):
         max_price=max_price,
         boat_type_filter=boat_type_filter,
         price_min_bound=price_stats['min_price'],
-        price_max_bound=price_stats['max_price'],
+        price_max_bound=price_max_bound,
         boat_types=boat_types
     ) # you have to do variable=variable
 
@@ -180,7 +182,7 @@ def create_boat():
         return render_template('boats_create.html', error=None, success="Data inserted successfully!")
     except Exception as e: # an error can occur if there is a duplicate primary key and in that scenario this section runs
         error = e.orig.args[1]
-        print(error)
+        print("Error:", error)
         return render_template('boats_create.html', error=error, success=None)
 
 # Same URL idea here:
@@ -214,7 +216,7 @@ def delete_boat():
     except Exception as e:
         # This catches both database errors and the ValueError raised above.
         error = e.orig.args[1] if hasattr(e, "orig") else str(e)
-        print(error)
+        print("Error:", error)
         
         return render_template('boats_delete.html', error=error, success=None)
 # make a route method for 'boats/id/<int: id>
@@ -281,7 +283,7 @@ def update_boat():
     except Exception as e:
         # This catches both database errors and the ValueError raised above.
         error = e.orig.args[1] if hasattr(e, "orig") else str(e)
-        print(error)
+        print("Error:", error)
         # Return the update page again, but this time show the error message.
         return render_template('boats_update.html', error=error, success=None)
 if __name__ == '__main__':

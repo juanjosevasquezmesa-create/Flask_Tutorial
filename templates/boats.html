@@ -564,7 +564,7 @@
                                 class="price-number-input"
                                 type="number"
                                 min="{{ price_min_bound }}"
-                                max="{{ price_max_bound }}"
+                                max="{{ price_max_bound - 1 }}"
                                 step="0.01"
                                 value="{{ min_price if min_price != '' else price_min_bound }}"
                             >
@@ -573,7 +573,7 @@
                                 class="price-range-input"
                                 type="range"
                                 min="{{ price_min_bound }}"
-                                max="{{ price_max_bound }}"
+                                max="{{ price_max_bound - 1 }}"
                                 value="{{ min_price if min_price != '' else price_min_bound }}"
                             >
                             <span id="minPriceValue" class="price-value">
